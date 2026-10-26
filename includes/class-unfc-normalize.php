@@ -846,14 +846,10 @@ class UNFC_Normalize {
 			return;
 		}
 
-		// Load IE8 Array.prototype.reduceRight polyfill for unorm.
-		wp_enqueue_script( 'unfc-ie8', plugins_url( "js/ie8{$suffix}.js", UNFC_FILE ), array(), UNFC_VERSION, true /*in_footer*/ );
-
-		global $wp_scripts; // For < 4.2 compat, don't use wp_script_add_data().
-		$wp_scripts->add_data( 'unfc-ie8', 'conditional', 'lt IE 9' );
-
 		// Load the javascript normalize polyfill https://github.com/walling/unorm
-		wp_enqueue_script( 'unfc-unorm', plugins_url( "unorm/lib/unorm.js", UNFC_FILE ), array( 'unfc-ie8' ), '1.4.1', true /*in_footer*/ ); // Note unorm doesn't come with minified so don't use.
+		// (the IE8 reduceRight polyfill and its conditional comment are gone:
+		// WordPress 6.9 deprecated conditional comments, no supported browser reads them.)
+		wp_enqueue_script( 'unfc-unorm', plugins_url( "unorm/lib/unorm.js", UNFC_FILE ), array(), '1.4.1', true /*in_footer*/ ); // Note unorm doesn't come with minified so don't use.
 
 		// Load the getSelection/setSelection jquery plugin https://github.com/timdown/rangyinputs
 		wp_enqueue_script( 'unfc-rangyinputs', plugins_url( "rangyinputs/rangyinputs-jquery{$rangyinputs_suffix}.js", UNFC_FILE ), array( 'jquery' ), '1.2.0', true /*in_footer*/ );
